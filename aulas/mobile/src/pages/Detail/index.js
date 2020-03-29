@@ -1,16 +1,31 @@
 import React from "react";
 import { useNavigation } from "@react-navigation/native";
-import { View, Image, Text, TouchableOpacity } from "react-native";
+import { View, Image, Text, TouchableOpacity, Linking } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import * as MailComposer from "expo-mail-composer";
 
 import styles from "./styles";
 import logoImg from "../../assets/logo.png";
 
 export default function Detail() {
   const navigation = useNavigation();
+  const message =
+    'Olá, estou entrando em contato, pois gostaria de ajudar no caso "Cadelinha atropelada" com o valor de R$ 120,00';
 
   function navigateBack() {
     navigation.goBack();
+  }
+
+  function sendMail() {
+    MailComposer.composeAsync({
+      subject: "Heróido caso: cadelinha atropelada",
+      recipients: ["roberto.urias@gmail.com"],
+      body: message
+    });
+  }
+
+  function sendWhatsApp() {
+    Linking.openURL(`whatsapp://send?phone=5511980927661&text=${message}`);
   }
 
   return (
@@ -24,14 +39,14 @@ export default function Detail() {
       </View>
 
       <View style={styles.incident}>
-        <Text style={styles.incidentProperty}>ONG:</Text>
+        <Text style={[styles.incidentProperty, { marginTop: 0 }]}>ONG:</Text>
         <Text style={styles.incidentValue}>APAD</Text>
 
         <Text style={styles.incidentProperty}>CASO:</Text>
         <Text style={styles.incidentValue}>Cadelinah atropelada</Text>
 
         <Text style={styles.incidentProperty}>VALOR</Text>
-        <Text style={styles.incidentValue}>R$ 120,00</Text>
+        <Text style={styles.incidentValue}>R$ 125,00</Text>
       </View>
 
       <View style={styles.contactBox}>
@@ -41,11 +56,11 @@ export default function Detail() {
         <Text style={styles.heroDescription}>Entre em contato:</Text>
 
         <View style={styles.actions}>
-          <TouchableOpacity style={styles.action} onPress={() => {}}>
+          <TouchableOpacity style={styles.action} onPress={sendWhatsApp}>
             <Text style={styles.actionText}>WhatsApp</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={styles.action} onPress={() => {}}>
+          <TouchableOpacity style={styles.action} onPress={sendMail}>
             <Text style={styles.actionText}>E-mail</Text>
           </TouchableOpacity>
         </View>
