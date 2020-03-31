@@ -25,7 +25,7 @@ export default function Detail() {
 
   function sendMail() {
     MailComposer.composeAsync({
-      subject: `Heróido caso: ${incident.title}`,
+      subject: `Herói do caso: ${incident.title}`,
       recipients: [`${incident.email}`],
       body: message
     });
